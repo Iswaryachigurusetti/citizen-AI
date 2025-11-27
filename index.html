@@ -29,18 +29,16 @@
       cursor: pointer;
       font-size: 16px;
     }
-    nav button:hover {
-      background: #004578;
-    }
+    nav button:hover { background: #004578; }
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 20px auto;
       background: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
@@ -55,9 +53,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    button.primary:hover {
-      background: #005a9e;
-    }
+    button.primary:hover { background: #005a9e; }
     .chatbox {
       border: 1px solid #ccc;
       height: 250px;
@@ -67,6 +63,19 @@
       background: #f9f9f9;
     }
     .hidden { display: none; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th { background: #f0f0f0; }
   </style>
 </head>
 <body>
@@ -80,6 +89,7 @@
     <button onclick="showTab('signup')">Signup</button>
     <button onclick="showTab('profile')">Profile</button>
     <button onclick="showTab('feedback')">Feedback</button>
+    <button onclick="showTab('dashboard')">Dashboard</button>
   </nav>
 
   <div class="container">
@@ -123,6 +133,27 @@
       <button class="primary" onclick="submitFeedback()">Submit</button>
       <p id="feedbackMsg"></p>
     </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="tab hidden">
+      <h2>Government Issues Dashboard</h2>
+      <p>Track and submit issues related to public services.</p>
+      <select id="issueCategory">
+        <option value="Roads">Roads</option>
+        <option value="Electricity">Electricity</option>
+        <option value="Water">Water</option>
+        <option value="Sanitation">Sanitation</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Education">Education</option>
+      </select>
+      <textarea id="issueDesc" placeholder="Describe the issue..."></textarea>
+      <button class="primary" onclick="submitIssue()">Report Issue</button>
+
+      <h3>Submitted Issues</h3>
+      <table id="issuesTable">
+        <tr><th>Category</th><th>Description</th><th>Status</th></tr>
+      </table>
+    </div>
   </div>
 
   <script>
@@ -141,7 +172,6 @@
 
     function login() {
       let email = document.getElementById('loginEmail').value;
-      let password = document.getElementById('loginPassword').value;
       document.getElementById('profileEmail').innerText = email;
       document.getElementById('profileName').innerText = "Citizen User";
       alert("Login successful!");
@@ -161,6 +191,17 @@
       let feedback = document.getElementById('feedbackText').value;
       document.getElementById('feedbackMsg').innerText = "Thank you for your feedback!";
       document.getElementById('feedbackText').value = "";
+    }
+
+    function submitIssue() {
+      let category = document.getElementById('issueCategory').value;
+      let desc = document.getElementById('issueDesc').value;
+      let table = document.getElementById('issuesTable');
+      let row = table.insertRow();
+      row.insertCell(0).innerText = category;
+      row.insertCell(1).innerText = desc;
+      row.insertCell(2).innerText = "Pending";
+      document.getElementById('issueDesc').value = "";
     }
   </script>
 </body>
