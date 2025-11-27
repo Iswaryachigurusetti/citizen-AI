@@ -162,13 +162,24 @@
       document.getElementById(tabId).classList.remove('hidden');
     }
 
-    function sendMessage() {
-      let input = document.getElementById('userInput').value;
-      let chatbox = document.getElementById('chatbox');
-      chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
-      chatbox.innerHTML += "<p><b>Citizen AI:</b> This is a sample response.</p>";
-      document.getElementById('userInput').value = "";
-    }
+ async function sendMessage() {
+  let input = document.getElementById('userInput').value;
+  let chatbox = document.getElementById('chatbox');
+  chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
+
+  // Call backend
+  let response = await fetch('/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: input })
+  });
+  let data = await response.json();
+
+  chatbox.innerHTML += "<p><b>Citizen AI:</b> " + data.answer + "</p>";
+  document.getElementById('userInput').value = "";
+}
+
+    
 
     function login() {
       let email = document.getElementById('loginEmail').value;
