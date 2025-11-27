@@ -168,7 +168,7 @@
   chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
 
   // Call backend
-  let response = await fetch('/ask', {
+  let response = await fetch('https://script.google.com/macros/s/AKfycbzuuvjXiheQMI1AlHje_DoVw77cKTlo5vhexQ__Mhj_KHHyHCxtcdo4E_z9v6XUcTslng/exec', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: input })
